@@ -19,4 +19,3 @@ python main.py
 - `main.py`: runs the example, replay, failure checks, and hash proof.
 - `REVIEW_PACKET.md`: short explanation of the build.
 
-No external packages are needed.
