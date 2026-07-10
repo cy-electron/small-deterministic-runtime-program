@@ -7,7 +7,12 @@ from events.event import ExecutionEvent
 from events.log import LoggedEvent
 from runtime.state import NodeState
 from runtime.transitions import transition
-from validation import RuntimeValidationContext, validate_before_execution
+from validation import (
+    RuntimeInvariantContext,
+    RuntimeValidationContext,
+    validate_before_execution,
+    validate_invariants,
+)
 
 
 @dataclass(frozen=True)
@@ -41,12 +46,19 @@ def execute_with_trace(
 ) -> tuple[NodeState, tuple[ExecutionSnapshot, ...]]:
     state = initial_state
     snapshots: list[ExecutionSnapshot] = []
-    context = RuntimeValidationContext()
+    validation_context = RuntimeValidationContext()
+    invariant_context = RuntimeInvariantContext()
 
     for item in event_log:
-        event = validate_before_execution(item, state, context)
+        previous_state = state
+        event = validate_before_execution(item, state, validation_context)
         state = apply_event(event, state)
-        sequence = item.sequence if isinstance(item, LoggedEvent) else context.expected_sequence - 1
+        sequence = (
+            item.sequence
+            if isinstance(item, LoggedEvent)
+            else validation_context.expected_sequence - 1
+        )
+        validate_invariants(previous_state, state, event, sequence, invariant_context)
         snapshots.append(
             ExecutionSnapshot(
                 sequence=sequence,

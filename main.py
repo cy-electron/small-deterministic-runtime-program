@@ -5,6 +5,7 @@ from replay import replay_events, replay_verified
 from runtime import Action, NodeState, RuntimeErrorReason
 from runtime.executor import ExecutionSnapshot, execute_with_trace
 from runtime.serialization import event_log_as_dicts, state_as_dict
+from stress import run_stress_validation
 
 
 NODE_ID = "quantum-runtime-node-01"
@@ -131,6 +132,18 @@ def run_determinism_proof(event_log: ExecutionLog) -> None:
     print(f"all_hashes_identical: {len(set(hashes)) == 1}")
 
 
+def run_stress_proof() -> None:
+    print_section("Deterministic Stress Validation")
+    results = run_stress_validation()
+    valid_results = [result for result in results if result["valid"] is True]
+    invalid_results = [result for result in results if result["valid"] is False]
+    print(f"valid_executions: {len(valid_results)}")
+    print(f"invalid_executions: {len(invalid_results)}")
+    print(f"invalid_halts: {sum(1 for result in invalid_results if result['halted'] is True)}")
+    for result in results:
+        print(result)
+
+
 def main() -> int:
     event_log = build_valid_event_log()
 
@@ -144,6 +157,7 @@ def main() -> int:
     run_replay_mismatch_case(event_log, original_trace)
     run_divergence_tests(event_log)
     run_determinism_proof(event_log)
+    run_stress_proof()
     return 0
 
 
