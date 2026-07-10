@@ -2,9 +2,11 @@
 
 This is a small Python project that shows a replay-safe runtime core.
 
-The program keeps an append-only event log, validates every event before it is
-applied, records state hashes, and then proves that the same log can be replayed
-with the same result every time.
+A Python implementation of a replay-safe deterministic runtime core demonstrating
+immutable execution logs, deterministic event processing, runtime validation,
+state hashing, and replay verification.
+
+this is the updated program (version v2 as per the task) of small-deterministic-runtime-program
 
 Run it with:
 
@@ -33,6 +35,28 @@ No external packages are needed.
 - `hashing/`: stable SHA-256 hashing for canonical state data.
 - `stress.py`: valid and invalid deterministic stress scenarios.
 - `review_packets/`: review notes and evidence for submission.
+
+## Runtime Flow
+
+```
+Incoming Event
+      │
+      ▼
+ Validation
+      │
+      ▼
+ Execution
+      │
+      ▼
+ Immutable Event Log
+      │
+      ▼
+ State Hash
+      │
+      ▼
+ Replay Verification
+```
+
 
 ## Current Scope
 
