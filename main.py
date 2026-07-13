@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from events import ExecutionEvent, ExecutionLog
+from coordination import verify_coordination_replay
+from observability import build_replay_evidence, export_replay_evidence
 from replay import replay_events, replay_verified
 from runtime import Action, NodeState, RuntimeErrorReason
 from runtime.executor import ExecutionSnapshot, execute_with_trace
@@ -147,6 +149,18 @@ def run_stress_proof() -> None:
         print(result)
 
 
+def run_coordination_observability() -> None:
+    print_section("Coordinated Runtime Audit")
+    verification = verify_coordination_replay()
+    evidence = build_replay_evidence(verification)
+    for record in evidence["execution_timeline"]:
+        print(record)
+    print(f"coordinated_state_hash: {verification.result.coordinated_state_hash}")
+    print(f"coordination_replay_verified: {verification.replay_verified}")
+    output_path = export_replay_evidence(verification, "artifacts/replay_evidence.json")
+    print(f"replay_evidence_json: {output_path}")
+
+
 def main() -> int:
     event_log = build_valid_event_log()
 
@@ -160,6 +174,7 @@ def main() -> int:
     run_replay_mismatch_case(event_log, original_trace)
     run_divergence_tests(event_log)
     run_determinism_proof(event_log)
+    run_coordination_observability()
     run_stress_proof()
     return 0
 

@@ -16,6 +16,7 @@ class CoordinationVerification:
     result: CoordinationResult
     replay_verified: bool
     node_replay_hashes: dict[str, str]
+    node_summaries: dict[str, dict[str, object]]
 
 
 def build_demo_messages() -> tuple[RuntimeMessage, ...]:
@@ -61,4 +62,9 @@ def verify_coordination_replay(
     for node in replay_coordinator.nodes.values():
         node.replay()
 
-    return CoordinationVerification(original, True, node_replay_hashes)
+    return CoordinationVerification(
+        original,
+        True,
+        node_replay_hashes,
+        {node_id: node.summary() for node_id, node in coordinator.nodes.items()},
+    )
