@@ -6,7 +6,17 @@ immutable messages, bounded delivery, replay verification, and structured
 evidence. It deliberately contains no networking, APIs, database, consensus
 protocol, cloud dependency, or concurrent execution.
 
+<<<<<<< HEAD
 ## Run
+=======
+A Python implementation of a replay-safe deterministic runtime core demonstrating
+immutable execution logs, deterministic event processing, runtime validation,
+state hashing, and replay verification.
+
+this is the updated program (version v2 as per the task) of small-deterministic-runtime-program
+
+Run it with:
+>>>>>>> 3e205ecaa0dff9f3c70a1b6bd56091f41bf19056
 
 ```powershell
 python main.py
@@ -28,6 +38,7 @@ report, benchmark result, and execution summary.
 
 ## Architecture Overview
 
+<<<<<<< HEAD
 ```text
 immutable RuntimeMessage
           |
@@ -42,6 +53,31 @@ delivery audit                                 event history + state hash
                                 v
                          JSON replay evidence
 ```
+=======
+## Runtime Flow
+
+```
+Incoming Event
+      │
+      ▼
+ Validation
+      │
+      ▼
+ Execution
+      │
+      ▼
+ Immutable Event Log
+      │
+      ▼
+ State Hash
+      │
+      ▼
+ Replay Verification
+```
+
+
+## Current Scope
+>>>>>>> 3e205ecaa0dff9f3c70a1b6bd56091f41bf19056
 
 - `runtime/`: immutable runtime state, legal transitions, execution, and
   `RuntimeNode`, which owns state, execution history, state hash, and replay
