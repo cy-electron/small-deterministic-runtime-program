@@ -6,6 +6,7 @@ immutable messages, bounded delivery, replay verification, and structured
 evidence. It deliberately contains no networking, APIs, database, consensus
 protocol, cloud dependency, or concurrent execution.
 
+(previously Replay-Safe Runtime and small deterministic runtime simulator)
 <<<<<<< HEAD
 ## Run
 =======
