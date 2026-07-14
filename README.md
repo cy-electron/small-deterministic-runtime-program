@@ -36,6 +36,10 @@ powershell -ExecutionPolicy Bypass -File scripts/run_validation.ps1
 This creates ignored, reproducible outputs under `artifacts/`: a coverage
 report, benchmark result, and execution summary.
 
+Pytest is configured to use `artifacts/pytest_tmp` rather than the Windows
+system temporary folder, so the test suite remains usable on machines where
+the default pytest temp directory is restricted.
+
 ## Architecture Overview
 
 <<<<<<< HEAD
