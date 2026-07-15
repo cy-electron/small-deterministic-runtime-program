@@ -7,15 +7,15 @@ evidence. It deliberately contains no networking, APIs, database, consensus
 protocol, cloud dependency, or concurrent execution.
 
 (previously Replay-Safe Runtime and small deterministic runtime simulator)
+
 <<<<<<< HEAD
-## Run
-=======
 A Python implementation of a replay-safe deterministic runtime core demonstrating
 immutable execution logs, deterministic event processing, runtime validation,
 state hashing, and replay verification.
 
 this is the updated program (version v2 as per the task) of small-deterministic-runtime-program
 
+## Run
 Run it with:
 >>>>>>> 3e205ecaa0dff9f3c70a1b6bd56091f41bf19056
 
@@ -58,7 +58,7 @@ delivery audit                                 event history + state hash
                                 v
                          JSON replay evidence
 ```
-=======
+
 ## Runtime Flow
 
 ```
